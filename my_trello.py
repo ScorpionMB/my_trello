@@ -1,6 +1,5 @@
 import sys
 import requests
-import json
 
 auth_params = {
     'key': "6247f05b0e98c620165ffca9048210f5",
@@ -14,7 +13,7 @@ def read():
     # Получим данные всех колонок на доске:      
     column_data = requests.get(base_url.format('boards') + '/' + board_id + '/lists', params=auth_params).json() 
 
-# Теперь выведем название каждой колонки и всех заданий, которые к ней относятся:      
+    # Теперь выведем название каждой колонки и всех заданий, которые к ней относятся:
     for column in column_data:      
         # Получим данные всех задач в колонке и перечислим все названия      
         task_data = requests.get(base_url.format('lists') + '/' + column['id'] + '/cards', params=auth_params).json()
@@ -23,7 +22,7 @@ def read():
             print('\t' + 'Нет задач!')      
             continue      
         for task in task_data:      
-            print('\t' + task['name'])
+            print('\t' + task['name'] + ' | id: ' + task['id'])
 
 def create_list(name):
     boards = requests.get(base_url.format('members') + '/' + 'user90428665' + '/boards', params=auth_params).json()
