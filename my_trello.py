@@ -52,7 +52,6 @@ def delete_task(name):
     column_data = requests.get(base_url.format('boards') + '/' + board_id + '/lists', params=auth_params).json()
 
     # Среди всех колонок нужно найти задачу по имени и получить её id
-    task_id = None    
     list_task = []
     dict_task = {}
     key = 1
@@ -69,7 +68,7 @@ def delete_task(name):
             print(i)
         id_input = input('Выберите id задачи: ')
         task_id = dict_task[int(id_input)]
-        # Удалим задачу с именем _name_
+    # Удалим задачу с именем _name_
     requests.delete(base_url.format('cards') + '/' + task_id, params=auth_params)
     print('Задача удалена')
             
@@ -78,7 +77,6 @@ def move_task(name, column_name):
     column_data = requests.get(base_url.format('boards') + '/' + board_id + '/lists', params=auth_params).json()    
             
     # Среди всех колонок нужно найти задачу по имени и получить её id    
-    task_id = None    
     list_task = []
     dict_task = {}
     key = 1
@@ -87,6 +85,7 @@ def move_task(name, column_name):
         for task in task_data:
             if task['name'] == name:
                 task_id = task['id']
+                dict_task[key] = task_id
                 list_task.append('Задача: {} | Список: {} | id: {}'.format(task['name'], column['name'], key))
                 key += 1
     if len(list_task) > 1:
